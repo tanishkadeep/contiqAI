@@ -86,3 +86,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+.light body {
+  --tile: var(--neutral-100);
+}
+
+.dark body {
+  --tile: var(--neutral-900);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tile: var(--neutral-900);
+  }
+}
