@@ -16,9 +16,10 @@ const Hero = () => {
         boost your engagement with AI-powered content creation.
       </div>
       <div className="flex justify-center items-center gap-4 mt-8">
-
-      <Button>Get Started</Button>
-      <Button variant="secondary">Learn more</Button>
+        <Button>Get Started</Button>
+        <Button variant="secondary" className="border">
+          Learn more
+        </Button>
       </div>
     </AnimatedGridBackgroundSection>
   );
