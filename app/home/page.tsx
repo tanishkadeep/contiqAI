@@ -9,13 +9,24 @@ import { useState } from "react";
 import axios from "axios";
 import History from "@/components/HomePage/History";
 import { parseMarkdown } from "@/lib/markdownParser";
-import { Spinner } from "@nextui-org/spinner";
+import { FaRegCopy } from "react-icons/fa6";
 
 function Page() {
   const [prompt, setPrompt] = useState("");
   const [platform, setPlatform] = useState("");
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
+
+  const copyToClipboard = () => {
+    const text = document.getElementById("contentToCopy")?.innerText;
+    if (text)
+      navigator.clipboard
+        .writeText(text)
+
+        .catch((err) => {
+          console.error("Error copying text: ", err);
+        });
+  };
 
   function onClickHandler() {
     setLoading(true);
@@ -84,8 +95,14 @@ function Page() {
           {content && !loading && (
             <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg border-2 px-6 py-4 text-base leading-relaxed relative">
               <div
-                className="prose"
+                className="pt-7"
                 dangerouslySetInnerHTML={{ __html: content }}
+                id="contentToCopy"
+              />
+              <FaRegCopy
+                onClick={copyToClipboard}
+                className="absolute top-3 right-4 cursor-pointer bg-neutral-200 hover:bg-neutral-300 rounded-full p-2 size-8 "
+                title="Copy"
               />
             </div>
           )}
