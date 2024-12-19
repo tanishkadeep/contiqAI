@@ -1,27 +1,49 @@
 "use client";
 
 import Header from "@/components/Header";
-import { FaBolt } from "react-icons/fa6";
+import {
+  FaBolt,
+  FaClockRotateLeft,
+  FaInstagram,
+  FaLinkedinIn,
+  FaRegClock,
+  FaXTwitter,
+} from "react-icons/fa6";
 import { SelectPlatform } from "@/components/Select";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import History from "@/components/HomePage/History";
 import { parseMarkdown } from "@/lib/markdownParser";
 import { FaRegCopy } from "react-icons/fa6";
+import { PiSpinnerLight } from "react-icons/pi";
 
 function Page() {
   const [prompt, setPrompt] = useState("");
   const [platform, setPlatform] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loadingHistory, setLoadingHistory] = useState(false);
   const [content, setContent] = useState("");
-  const [points, setPoints] = useState(100);
+  const [points, setPoints] = useState("");
+  const [threadsArray, setThreadsArray] = useState([]);
+  const [loadingPoints, setLoadingPoints] = useState(false);
 
   useEffect(() => {
+    setLoadingHistory(true);
+    axios.get("/api/history").then((res) => {
+      setLoadingHistory(false);
+      setThreadsArray(res.data.threads);
+
+      console.log(res.data.threads);
+    });
+  }, []);
+
+  useEffect(() => {
+    setLoadingPoints(true);
     axios
       .get("/api/points")
       .then((res) => {
+        setLoadingPoints(false);
         setPoints(res.data.points);
       })
       .catch((err) => {
@@ -50,12 +72,21 @@ function Page() {
       .then(async function (response) {
         const parsedContent = await parseMarkdown(response.data.content);
         setContent(parsedContent);
+        setLoadingHistory(true);
+        return axios.get("/api/history");
+      })
+      .then((res) => {
+        setLoadingHistory(false);
+        setThreadsArray(res.data.threads);
 
+        setLoadingPoints(true);
         return axios.get("/api/points");
       })
       .then((res) => {
+        setLoadingPoints(false);
         setPoints(res.data.points);
       })
+
       .catch(function (error) {
         console.log(error);
       })
@@ -69,7 +100,59 @@ function Page() {
       <Header />
       <div className="flex justify-around items-start gap-8 px-10 py-16 sm:flex-row flex-col">
         {/* left */}
-        <History />
+        <div className="flex flex-col gap-4 border-2 w-full sm:w-1/3 bg-neutral-100 dark:bg-neutral-900 rounded-lg px-4 py-6">
+          <div className="flex items-center justify-between text-xl font-bold px-2 md:px-4">
+            <div className="">History</div>
+            <FaClockRotateLeft />
+          </div>
+
+          {loadingHistory && threadsArray.length == 0 && (
+            <div className="flex items-center justify-center">
+              <PiSpinnerLight className="animate-spin size-6" />
+            </div>
+          )}
+
+          {/* items */}
+          {threadsArray &&
+            threadsArray.map(
+              (
+                thread: {
+                  title: string;
+                  createdAt: string;
+                  platform: string;
+                  content: string;
+                },
+                index
+              ) => (
+                <div key={index} className="flex flex-col gap-4">
+                  {/* item */}
+                  <div className="p-4 bg-neutral-200 dark:bg-neutral-800 rounded-lg mx-4 sm:mx-1 md:mx-4 mt-2 border-2">
+                    {/* platform */}
+                    <div className="flex items-center gap-2 font-bold">
+                      {thread.platform == "X" ? (
+                        <FaXTwitter />
+                      ) : thread.platform == "Instagram" ? (
+                        <FaInstagram />
+                      ) : thread.platform == "LinkedIn" ? (
+                        <FaLinkedinIn />
+                      ) : (
+                        ""
+                      )}
+                      <div>{thread.platform}</div>
+                    </div>
+                    {/* title */}
+                    <div className="my-2">{thread.title}</div>
+
+                    {/* created at */}
+                    <div className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400 text-sm sm:text-xs md:text-sm ">
+                      <FaRegClock />
+                      <div>{thread.createdAt.slice(0, 10)}</div>
+                    </div>
+                  </div>
+                </div>
+              )
+            )}
+        </div>
 
         {/* right */}
         <div className="w-full sm:w-2/3 flex flex-col gap-5">
@@ -77,7 +160,8 @@ function Page() {
             <FaBolt className="size-6" />
             <div>
               <div className="text-lg font-bold">Available Points</div>
-              <div>{points}</div>
+              {loadingPoints && <PiSpinnerLight className="animate-spin " />}
+              {!loadingPoints && <div>{points}</div>}
             </div>
           </div>
 
@@ -104,7 +188,14 @@ function Page() {
               disabled={!prompt || !platform || loading}
               onClick={onClickHandler}
             >
-              {loading ? "Generating..." : "Generate Content (10 points)"}
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <PiSpinnerLight className="animate-spin size-6 text-white" />
+                  Generating...
+                </div>
+              ) : (
+                "Generate Content (10 points)"
+              )}
             </Button>
           </div>
 

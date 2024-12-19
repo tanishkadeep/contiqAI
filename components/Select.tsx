@@ -26,21 +26,21 @@ export function SelectPlatform({ onPlatformChange }: SelectPlatformProps) {
         <SelectGroup>
           <SelectLabel>Platforms</SelectLabel>
 
-          <SelectItem value="instagram">
+          <SelectItem value="Instagram">
             <div className="flex gap-2 items-center">
               <FaInstagram />
               <div>Instagram</div>
             </div>
           </SelectItem>
 
-          <SelectItem value="linkedin">
+          <SelectItem value="LinkedIn">
             <div className="flex gap-2 items-center">
               <FaLinkedinIn className="text-neutral-600 dark:text-neutral-100" />
               <div>LinkedIn</div>
             </div>
           </SelectItem>
 
-          <SelectItem value="x">
+          <SelectItem value="X">
             <div className="flex gap-2 items-center">
               <FaXTwitter />
               <div>X</div>
