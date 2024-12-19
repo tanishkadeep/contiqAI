@@ -5,7 +5,7 @@ import { FaBolt } from "react-icons/fa6";
 import { SelectPlatform } from "@/components/Select";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import History from "@/components/HomePage/History";
 import { parseMarkdown } from "@/lib/markdownParser";
@@ -16,6 +16,18 @@ function Page() {
   const [platform, setPlatform] = useState("");
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
+  const [points, setPoints] = useState(100);
+
+  useEffect(() => {
+    axios
+      .get("/api/points")
+      .then((res) => {
+        setPoints(res.data.points);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [points]);
 
   const copyToClipboard = () => {
     const text = document.getElementById("contentToCopy")?.innerText;
@@ -37,8 +49,12 @@ function Page() {
       })
       .then(async function (response) {
         const parsedContent = await parseMarkdown(response.data.content);
-
         setContent(parsedContent);
+
+        return axios.get("/api/points");
+      })
+      .then((res) => {
+        setPoints(res.data.points);
       })
       .catch(function (error) {
         console.log(error);
@@ -61,7 +77,7 @@ function Page() {
             <FaBolt className="size-6" />
             <div>
               <div className="text-lg font-bold">Available Points</div>
-              <div>100</div>
+              <div>{points}</div>
             </div>
           </div>
 
