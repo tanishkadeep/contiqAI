@@ -100,3 +100,7 @@
     --tile: var(--neutral-900);
   }
 }
+
+html {
+  scroll-behavior: smooth;
+}

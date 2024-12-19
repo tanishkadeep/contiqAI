@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <div className="flex justify-between items-center px-12 md:px-24 py-4 border-b-2 shadow-md sticky top-0 z-50 bg-background">
       <div className="md:text-2xl text-lg font-extrabold">ContiqAI</div>
-      <div className="flex items-center gap-4 justify-center">
+      <div className="flex items-center gap-4 justify-center font-bold">
         <ModeToggle />
         <SignedOut>
           <SignInButton />

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "../ui/button";
 import { Tiles } from "../ui/tiles";
 
@@ -16,9 +17,11 @@ const Hero = () => {
         boost your engagement with AI-powered content creation.
       </div>
       <div className="flex justify-center items-center gap-4 mt-8">
-        <Button>Get Started</Button>
+        <Button>
+          <Link href="/sign-in">Get Started</Link>
+        </Button>
         <Button variant="secondary" className="border">
-          Learn more
+          <Link href="#features">Learn more</Link>
         </Button>
       </div>
     </AnimatedGridBackgroundSection>
@@ -31,7 +34,7 @@ const AnimatedGridBackgroundSection: React.FC<{
   return (
     <div
       className={
-        "w-full min-h-[88vh] overflow-hidden relative flex items-center justify-center"
+        "w-full min-h-[88vh] overflow-hidden relative flex items-center justify-center shadow-md [mask-image:linear-gradient(to_right,transparent,black,black,black,black,black,transparent)]"
       }
     >
       <div className={"w-fit h-fit relative z-[2]"}>{children}</div>

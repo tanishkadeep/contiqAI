@@ -26,6 +26,7 @@ const config: Config = {
       animation: {
         moveUp: "moveUp 1.4s ease forwards",
         appear: "appear 1s 1s forwards",
+        marquee: "marquee var(--duration, 30s) linear infinite",
       },
       keyframes: {
         moveUp: {
@@ -35,6 +36,9 @@ const config: Config = {
         appear: {
           from: { opacity: "0" },
           to: { opacity: "1" },
+        },
+        marquee: {
+          to: { transform: "translateX(-50%)" },
         },
       },
       backgroundImage: {
