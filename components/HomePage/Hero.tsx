@@ -7,12 +7,12 @@ const Hero = () => {
     <AnimatedGridBackgroundSection>
       <div
         className={
-          "text-6xl max-w-2xl mx-auto font-extrabold text-center mb-4 backdrop-blur-md"
+          "lg:text-6xl text-4xl md:text-5xl max-w-2xl mx-auto font-extrabold text-center mb-4 backdrop-blur-md"
         }
       >
         Create Engaging Content with AI
       </div>
-      <div className="text-xl text-center max-w-4xl mx-auto text-neutral-500 dark:text-neutral-400 leading-relaxed backdrop-blur-md">
+      <div className="md:text-xl text-lg text-center max-w-4xl mx-auto text-neutral-500 dark:text-neutral-400 leading-relaxed backdrop-blur-md">
         Generate high-quality content for social media in seconds. Save time and
         boost your engagement with AI-powered content creation.
       </div>
@@ -34,7 +34,7 @@ const AnimatedGridBackgroundSection: React.FC<{
   return (
     <div
       className={
-        "w-full min-h-[88vh] overflow-hidden relative flex items-center justify-center shadow-md [mask-image:linear-gradient(to_right,transparent,black,black,black,black,black,transparent)]"
+        "w-full min-h-[88vh] overflow-hidden relative flex items-center justify-center shadow-md [mask-image:linear-gradient(to_right,transparent,black,black,black,black,black,transparent)] px-8 lg:px-0"
       }
     >
       <div className={"w-fit h-fit relative z-[2]"}>{children}</div>

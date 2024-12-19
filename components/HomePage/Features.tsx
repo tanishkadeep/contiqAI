@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Brain, Clock, Target, Wand2 } from "lucide-react";
+import { Brain, Clock, Shuffle, Target } from "lucide-react";
 
 const features = [
   {
@@ -21,16 +21,19 @@ const features = [
     icon: Target,
   },
   {
-    title: "Ready-to-Use Templates",
+    title: "Content Variation",
     description:
-      "Choose from hundreds of templates designed for different content types and industries.",
-    icon: Wand2,
+      "Generate multiple versions of the same content to find the perfect fit.",
+    icon: Shuffle,
   },
 ];
 
 export function FeaturesSection() {
   return (
-    <section className="py-32 px-8 md:px-16" id="features">
+    <section
+      className="pt-16 pb-24 lg:pb-32 lg:pt-28 px-8 md:px-16"
+      id="features"
+    >
       <div className="max-w-7xl mx-auto">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold sm:text-4xl">
