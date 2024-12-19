@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import {
   Select,
   SelectContent,
@@ -9,14 +8,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { FaInstagram } from "react-icons/fa";
-
 import { FaXTwitter, FaLinkedinIn } from "react-icons/fa6";
 
-export function SelectPlatform() {
+interface SelectPlatformProps {
+  onPlatformChange: (value: string) => void;
+}
+
+export function SelectPlatform({ onPlatformChange }: SelectPlatformProps) {
   return (
-    <Select>
+    <Select onValueChange={onPlatformChange}>
       <SelectTrigger className="w-full bg-white dark:bg-neutral-800 text-base">
         <SelectValue placeholder="Select a platform" />
       </SelectTrigger>
@@ -28,7 +29,6 @@ export function SelectPlatform() {
           <SelectItem value="instagram">
             <div className="flex gap-2 items-center">
               <FaInstagram />
-
               <div>Instagram</div>
             </div>
           </SelectItem>
@@ -36,7 +36,6 @@ export function SelectPlatform() {
           <SelectItem value="linkedin">
             <div className="flex gap-2 items-center">
               <FaLinkedinIn className="text-neutral-600 dark:text-neutral-100" />
-
               <div>LinkedIn</div>
             </div>
           </SelectItem>
@@ -44,7 +43,6 @@ export function SelectPlatform() {
           <SelectItem value="x">
             <div className="flex gap-2 items-center">
               <FaXTwitter />
-
               <div>X</div>
             </div>
           </SelectItem>
