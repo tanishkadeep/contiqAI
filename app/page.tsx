@@ -1,8 +1,8 @@
-import { FeaturesSection } from "@/components/HomePage/Features";
-import Footer from "@/components/HomePage/Footer";
-import Header from "@/components/HomePage/Header";
-import Hero from "@/components/HomePage/Hero";
-import MarqueeComponent from "@/components/HomePage/MarqueeComponent";
+import { FeaturesSection } from "@/components/LandingPage/Features";
+import Footer from "@/components/LandingPage/Footer";
+import Header from "@/components/Header";
+import Hero from "@/components/LandingPage/Hero";
+import MarqueeComponent from "@/components/LandingPage/MarqueeComponent";
 
 export default function Home() {
   return (

@@ -1,0 +1,55 @@
+import * as React from "react";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { FaInstagram } from "react-icons/fa";
+
+import { FaXTwitter, FaLinkedinIn } from "react-icons/fa6";
+
+export function SelectPlatform() {
+  return (
+    <Select>
+      <SelectTrigger className="w-full bg-white dark:bg-neutral-800 text-base">
+        <SelectValue placeholder="Select a platform" />
+      </SelectTrigger>
+
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Platforms</SelectLabel>
+
+          <SelectItem value="instagram">
+            <div className="flex gap-2 items-center">
+              <FaInstagram />
+
+              <div>Instagram</div>
+            </div>
+          </SelectItem>
+
+          <SelectItem value="linkedin">
+            <div className="flex gap-2 items-center">
+              <FaLinkedinIn className="text-neutral-600 dark:text-neutral-100" />
+
+              <div>LinkedIn</div>
+            </div>
+          </SelectItem>
+
+          <SelectItem value="x">
+            <div className="flex gap-2 items-center">
+              <FaXTwitter />
+
+              <div>X</div>
+            </div>
+          </SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  );
+}

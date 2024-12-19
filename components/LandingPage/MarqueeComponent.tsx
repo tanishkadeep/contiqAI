@@ -6,7 +6,7 @@ const MarqueeComponent = () => {
   const arr = [
     { logo: FaLinkedinIn, name: "LinkedIn" },
     { logo: FaInstagram, name: "Instagram" },
-    { logo: FaXTwitter, name: "Twitter" },
+    { logo: FaXTwitter, name: "X" },
   ];
 
   return (
