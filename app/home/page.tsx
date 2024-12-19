@@ -72,19 +72,20 @@ function Page() {
       .then(async function (response) {
         const parsedContent = await parseMarkdown(response.data.content);
         setContent(parsedContent);
+        setLoadingPoints(true);
+
+        return axios.get("/api/points");
+      })
+      .then((res) => {
+        setLoadingPoints(false);
+        setPoints(res.data.threads);
+
         setLoadingHistory(true);
         return axios.get("/api/history");
       })
       .then((res) => {
         setLoadingHistory(false);
         setThreadsArray(res.data.threads);
-
-        setLoadingPoints(true);
-        return axios.get("/api/points");
-      })
-      .then((res) => {
-        setLoadingPoints(false);
-        setPoints(res.data.points);
       })
 
       .catch(function (error) {
@@ -185,7 +186,9 @@ function Page() {
             </div>
             <Button
               className="mt-4 w-full bg-neutral-800 dark:bg-neutral-200 font-semibold text-wrap sm:py-0 py-7 text-sm sm:text-base"
-              disabled={!prompt || !platform || loading}
+              disabled={
+                !prompt || !platform || loading || parseInt(points) <= 0
+              }
               onClick={onClickHandler}
             >
               {loading ? (
@@ -197,18 +200,23 @@ function Page() {
                 "Generate Content (10 points)"
               )}
             </Button>
+            {parseInt(points) <= 0 && (
+              <div className="text-sm text-red-700 dark:text-red-500 mt-2 text-center font-bold">
+                Not enough points
+              </div>
+            )}
           </div>
 
           {content && !loading && (
             <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg border-2 px-6 py-4 text-base leading-relaxed relative">
               <div
-                className="pt-7"
+                className="pt-7 dark:text-neutral-200"
                 dangerouslySetInnerHTML={{ __html: content }}
                 id="contentToCopy"
               />
               <FaRegCopy
                 onClick={copyToClipboard}
-                className="absolute top-3 right-4 cursor-pointer bg-neutral-200 hover:bg-neutral-300 rounded-full p-2 size-8 "
+                className="absolute top-3 right-4 cursor-pointer bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-600 rounded-full p-2 size-8 "
                 title="Copy"
               />
             </div>
