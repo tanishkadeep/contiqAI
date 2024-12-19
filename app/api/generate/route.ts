@@ -1,7 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse, NextRequest } from "next/server";
+import { currentUser } from "@clerk/nextjs/server";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import dotenv from "dotenv";
+import { systemPrompt } from "@/lib/prompt";
+dotenv.config();
 
 const client = new PrismaClient();
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 async function getUser(email: string) {
   const userExists = await client.user.findUnique({
@@ -31,18 +39,32 @@ async function getUser(email: string) {
   return user;
 }
 
-async function getContent(prompt: string, platform: string) {
-  return "text";
+async function getContent(userPrompt: string, platform: string) {
+  const prompt =
+    systemPrompt + "prompt: " + userPrompt + "platform: " + platform;
+
+  const result = await model.generateContent(prompt);
+  console.log(result.response.text());
+
+  return result.response.text();
 }
 
 export async function POST(req: NextRequest) {
-  const { prompt, platform, email } = await req.json();
+  const { prompt, platform } = await req.json();
 
-  const user = await getUser(email);
+  const userObj = await currentUser();
+
+  if (!userObj) {
+    return NextResponse.json({
+      msg: "Authentication failed",
+    });
+  }
+
+  const user = await getUser(userObj?.emailAddresses[0].emailAddress);
 
   if (!user) {
     return NextResponse.json({
-      msg: "Authentication failed",
+      msg: "User not found",
     });
   }
 
@@ -81,6 +103,6 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json({
-    user,
+    content,
   });
 }

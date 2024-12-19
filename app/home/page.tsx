@@ -7,26 +7,33 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import axios from "axios";
-import { useUser } from "@clerk/nextjs";
 import History from "@/components/HomePage/History";
+import { parseMarkdown } from "@/lib/markdownParser";
+import { Spinner } from "@nextui-org/spinner";
 
 function Page() {
   const [prompt, setPrompt] = useState("");
   const [platform, setPlatform] = useState("");
-  const { user } = useUser();
+  const [loading, setLoading] = useState(false);
+  const [content, setContent] = useState("");
 
   function onClickHandler() {
+    setLoading(true);
     axios
       .post("/api/generate", {
         prompt,
         platform,
-        email: user?.emailAddresses[0].emailAddress,
       })
-      .then(function (response) {
-        console.log(response);
+      .then(async function (response) {
+        const parsedContent = await parseMarkdown(response.data.content);
+
+        setContent(parsedContent);
       })
       .catch(function (error) {
         console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }
 
@@ -66,13 +73,49 @@ function Page() {
               />
             </div>
             <Button
-              className="mt-4 w-full bg-neutral-800 dark:bg-neutral-200 font-semibold"
-              disabled={!prompt || !platform}
+              className="mt-4 w-full bg-neutral-800 dark:bg-neutral-200 font-semibold text-wrap sm:py-0 py-7 text-sm sm:text-base"
+              disabled={!prompt || !platform || loading}
               onClick={onClickHandler}
             >
-              Generate Content (10 points)
+              {loading ? "Generating..." : "Generate Content (10 points)"}
             </Button>
           </div>
+
+          {content && !loading && (
+            <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg border-2 px-6 py-4 text-base leading-relaxed relative">
+              <div
+                className="prose"
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
+            </div>
+          )}
+
+          {loading && (
+            <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg border-2 px-6 py-4 text-base leading-relaxed">
+              <div
+                className={
+                  "flex w-full h-8 items-center gap-4 max-w-sm animate-pulse"
+                }
+              >
+                <div
+                  className={
+                    "w-full h-full flex flex-col items-start justify-start gap-3"
+                  }
+                >
+                  <div
+                    className={
+                      "w-full dark:bg-neutral-800 bg-neutral-300 h-full rounded-lg"
+                    }
+                  />
+                  <div
+                    className={
+                      "w-2/3 dark:bg-neutral-800 bg-neutral-300 h-full rounded-lg"
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
