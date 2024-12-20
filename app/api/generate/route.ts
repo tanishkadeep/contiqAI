@@ -16,7 +16,6 @@ async function getContent(userPrompt: string, platform: string) {
     systemPrompt + "prompt: " + userPrompt + "platform: " + platform;
 
   const result = await model.generateContent(prompt);
-  console.log(result.response.text());
 
   return result.response.text();
 }

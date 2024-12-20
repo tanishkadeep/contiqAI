@@ -48,8 +48,6 @@ function Page() {
     axios.get("/api/history").then((res) => {
       setLoadingHistory(false);
       setThreadsArray(res.data.threads);
-
-      console.log(res.data.threads);
     });
   }, []);
 
@@ -134,7 +132,7 @@ function Page() {
             <FaClockRotateLeft />
           </div>
 
-          {loadingHistory && threadsArray.length == 0 && (
+          {loadingHistory && threadsArray?.length == 0 && (
             <div className="flex items-center justify-center">
               <PiSpinnerLight className="animate-spin size-6" />
             </div>
