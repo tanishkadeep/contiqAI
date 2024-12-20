@@ -40,6 +40,10 @@ function Page() {
   };
 
   useEffect(() => {
+    axios.get("/api/user");
+  }, []);
+
+  useEffect(() => {
     setLoadingHistory(true);
     axios.get("/api/history").then((res) => {
       setLoadingHistory(false);

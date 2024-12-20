@@ -11,34 +11,6 @@ const client = new PrismaClient();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-async function getUser(email: string) {
-  const userExists = await client.user.findUnique({
-    where: {
-      email,
-    },
-  });
-
-  if (!userExists) {
-    try {
-      await client.user.create({
-        data: {
-          email,
-        },
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  const user = await client.user.findUnique({
-    where: {
-      email,
-    },
-  });
-
-  return user;
-}
-
 async function getContent(userPrompt: string, platform: string) {
   const prompt =
     systemPrompt + "prompt: " + userPrompt + "platform: " + platform;
@@ -60,7 +32,13 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const user = await getUser(userObj?.emailAddresses[0].emailAddress);
+  const email = userObj?.emailAddresses[0].emailAddress;
+
+  const user = await client.user.findUnique({
+    where: {
+      email,
+    },
+  });
 
   if (!user) {
     return NextResponse.json({
