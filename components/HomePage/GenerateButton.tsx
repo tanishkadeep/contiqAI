@@ -23,7 +23,7 @@ const GenerateButton = ({
       >
         {loading ? (
           <div className="flex items-center gap-2">
-            <PiSpinnerLight className="animate-spin size-6 text-white" />
+            <PiSpinnerLight className="animate-spin size-6 text-white dark:text-neutral-900" />
             Generating...
           </div>
         ) : (

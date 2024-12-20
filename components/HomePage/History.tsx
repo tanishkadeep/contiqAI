@@ -47,7 +47,7 @@ const History = ({
 
       {/* items */}
       {threadsArray &&
-        threadsArray.map((thread: Thread, index: Key | null | undefined) => (
+        [...threadsArray].reverse().map((thread: Thread, index: Key | null | undefined) => (
           <div
             key={index}
             onClick={() => handleThreadClick(thread.content)}

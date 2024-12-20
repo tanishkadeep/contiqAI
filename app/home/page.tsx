@@ -34,6 +34,14 @@ function Page() {
   useEffect(() => {
     axios.get("/api/user");
 
+    setLoadingHistory(true);
+    axios.get("/api/history").then((res) => {
+      setLoadingHistory(false);
+      setThreadsArray(res.data.threads);
+    });
+  }, []);
+
+  useEffect(() => {
     setLoadingPoints(true);
     axios
       .get("/api/points")
@@ -44,18 +52,7 @@ function Page() {
       .catch((err) => {
         console.log(err);
       });
-
-    setLoadingHistory(true);
-    axios
-      .get("/api/history")
-      .then((res) => {
-        setLoadingHistory(false);
-        setThreadsArray(res.data.threads);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  }, [points]);
 
   function onClickHandler() {
     setLoading(true);
