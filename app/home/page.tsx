@@ -124,7 +124,7 @@ function Page() {
       <Header />
       <div className="flex justify-around items-start gap-8 px-10 py-16 sm:flex-row flex-col">
         {/* left */}
-        <div className="flex flex-col gap-4 border-2 w-full sm:w-1/3 bg-neutral-100 dark:bg-neutral-900 rounded-lg px-4 py-6">
+        <div className="flex flex-col gap-4 border-2 w-full sm:w-1/3 bg-neutral-100 dark:bg-neutral-900 rounded-lg px-4 py-6 order-last">
           <div className="flex items-center justify-between text-xl font-bold px-2 md:px-4">
             <div className="">History</div>
             <FaClockRotateLeft />
