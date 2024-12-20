@@ -22,6 +22,12 @@ export async function GET(req: NextRequest) {
     },
   });
 
+  if (!user) {
+    return NextResponse.json({
+      threads: null,
+    });
+  }
+
   return NextResponse.json({
     threads: user?.threads,
   });

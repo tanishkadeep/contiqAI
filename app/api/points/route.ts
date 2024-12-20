@@ -19,6 +19,12 @@ export async function GET(req: NextRequest) {
     },
   });
 
+  if (!user) {
+    return NextResponse.json({
+      points: 100,
+    });
+  }
+
   return NextResponse.json({
     points: user?.points,
   });
