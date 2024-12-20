@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ContiqAI ⚡
 
-## Getting Started
+**An AI-powered tool to create high-quality content for X, Instagram, and LinkedIn in seconds!**
 
-First, run the development server:
+ContiqAI simplifies content creation for social media creators. Generate platform-specific threads, captions, and posts effortlessly and focus on what truly matters – your creativity!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **AI-Driven Content Generation**: Quickly craft professional content tailored for X, Instagram, and LinkedIn.
+- **Platform-Specific Formats**: Generate threads for X, captions for Instagram, and posts for LinkedIn.
+- **User-Friendly Interface**: Intuitive design for seamless user experience.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+---
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend**: [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/)
+- **Backend**: [TypeScript](https://www.typescriptlang.org/), [Prisma](https://www.prisma.io/), [PostgreSQL](https://www.postgresql.org/)
+- **AI Integration**: [Google Gemini AI](https://ai.google/)
+- **Authentication**: [Clerk](https://clerk.dev/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## ✨ How It Works
 
-## Deploy on Vercel
+1. **Select Your Platform**: Choose between X, Instagram, or LinkedIn.
+2. **Input Your Ideas**: Provide a brief description or theme.
+3. **Generate Content**: Let AI do the heavy lifting and create content for you.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+📬 Thank you for checking out ContiqAI! If you have any questions or feedback, feel free to open an issue or contact me at tanishkadeep09@gmail.com
+
+---
