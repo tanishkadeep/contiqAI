@@ -17,6 +17,7 @@ import axios from "axios";
 import { parseMarkdown } from "@/lib/markdownParser";
 import { FaRegCopy } from "react-icons/fa6";
 import { PiSpinnerLight } from "react-icons/pi";
+import { IoMdClose } from "react-icons/io";
 
 function Page() {
   const [prompt, setPrompt] = useState("");
@@ -27,6 +28,16 @@ function Page() {
   const [points, setPoints] = useState("");
   const [threadsArray, setThreadsArray] = useState([]);
   const [loadingPoints, setLoadingPoints] = useState(false);
+
+  const [selectedContent, setSelectedContent] = useState<string | null>(null);
+  const [isContentVisible, setIsContentVisible] = useState(false);
+
+  const handleThreadClick = async (content: string) => {
+    const parsedContent = await parseMarkdown(content);
+
+    setSelectedContent(parsedContent);
+    setIsContentVisible(true);
+  };
 
   useEffect(() => {
     setLoadingHistory(true);
@@ -53,6 +64,17 @@ function Page() {
 
   const copyToClipboard = () => {
     const text = document.getElementById("contentToCopy")?.innerText;
+    if (text)
+      navigator.clipboard
+        .writeText(text)
+
+        .catch((err) => {
+          console.error("Error copying text: ", err);
+        });
+  };
+
+  const copyToClipboardModal = () => {
+    const text = document.getElementById("contentToCopyModal")?.innerText;
     if (text)
       navigator.clipboard
         .writeText(text)
@@ -125,7 +147,11 @@ function Page() {
                 },
                 index
               ) => (
-                <div key={index} className="flex flex-col gap-4">
+                <div
+                  key={index}
+                  onClick={() => handleThreadClick(thread.content)}
+                  className="flex flex-col gap-4 cursor-pointer"
+                >
                   {/* item */}
                   <div className="p-4 bg-neutral-200 dark:bg-neutral-800 rounded-lg mx-4 sm:mx-1 md:mx-4 mt-2 border-2">
                     {/* platform */}
@@ -153,6 +179,31 @@ function Page() {
                 </div>
               )
             )}
+
+          {isContentVisible && selectedContent && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 ">
+              <div className="bg-white dark:bg-neutral-800 py-6 px-8 rounded-lg shadow-lg w-2/3 relative max-h-[70vh] overflow-scroll text-sm sm:text-base">
+                <div className="flex items-center gap-4">
+                  <h2 className="text-lg font-bold">Content</h2>
+                  <FaRegCopy
+                    onClick={copyToClipboardModal}
+                    className="cursor-pointer bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-600 rounded-full p-2 size-8 "
+                    title="Copy"
+                  />
+                </div>
+                <div
+                  className="mt-2 dark:text-neutral-200"
+                  id="contentToCopyModal"
+                  dangerouslySetInnerHTML={{ __html: selectedContent }}
+                />
+                <IoMdClose
+                  onClick={() => setIsContentVisible(false)}
+                  className="absolute top-4 right-4 cursor-pointer text-neutral-600 dark:text-neutral-300 dark:hover:text-neutral-100 hover:text-neutral-800"
+                  size={24}
+                />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* right */}
