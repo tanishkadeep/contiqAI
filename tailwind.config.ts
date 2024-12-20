@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
-
 import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
 import svgToDataUri from "mini-svg-data-uri";
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 function addVariablesForColors({ addBase, theme }: any) {
   let allColors = flattenColorPalette(theme("colors"));
@@ -27,8 +27,17 @@ const config: Config = {
         moveUp: "moveUp 1.4s ease forwards",
         appear: "appear 1s 1s forwards",
         marquee: "marquee var(--duration, 30s) linear infinite",
+        "shiny-text": "shiny-text 3s infinite",
       },
       keyframes: {
+        "shiny-text": {
+          "0%, 90%, 100%": {
+            "background-position": "calc(-100% - var(--shiny-width)) 0",
+          },
+          "30%, 60%": {
+            "background-position": "calc(100% + var(--shiny-width)) 0",
+          },
+        },
         moveUp: {
           "0%": { transform: "translateY(5%)", opacity: "0" },
           "100%": { transform: "translateY(0%)", opacity: "1" },
@@ -96,6 +105,7 @@ const config: Config = {
     },
   },
   plugins: [
+    [new MiniCssExtractPlugin()],
     require("tailwindcss-animate"),
     addVariablesForColors,
     function ({ matchUtilities, theme, addUtilities }: any) {

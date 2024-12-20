@@ -1,5 +1,6 @@
 import { FaRegCopy } from "react-icons/fa";
 import { copyToClipboard } from "@/components/ui/copyToClipboard";
+import Skeleton from "@/components/ui/Skeleton";
 
 const ContentBox = ({
   content,
@@ -27,28 +28,7 @@ const ContentBox = ({
 
       {loading && (
         <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg border-2 px-6 py-4 text-base leading-relaxed">
-          <div
-            className={
-              "flex w-full h-8 items-center gap-4 max-w-sm animate-pulse"
-            }
-          >
-            <div
-              className={
-                "w-full h-full flex flex-col items-start justify-start gap-3"
-              }
-            >
-              <div
-                className={
-                  "w-full dark:bg-neutral-800 bg-neutral-300 h-full rounded-lg"
-                }
-              />
-              <div
-                className={
-                  "w-2/3 dark:bg-neutral-800 bg-neutral-300 h-full rounded-lg"
-                }
-              />
-            </div>
-          </div>
+          <Skeleton />
         </div>
       )}
     </div>
