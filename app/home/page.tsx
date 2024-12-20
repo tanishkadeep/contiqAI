@@ -86,6 +86,7 @@ function Page() {
 
   function onClickHandler() {
     setLoading(true);
+    setPrompt("");
     axios
       .post("/api/generate", {
         prompt,
